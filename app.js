@@ -19,6 +19,7 @@ mongoose.Promise=global.Promise;
 
 ///routes which shonld hanle requests
 app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
