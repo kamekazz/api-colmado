@@ -5,8 +5,8 @@ const Product = require("../models/product");
 
 exports.orders_get_all = (req, res, next) => {
   Order.find()
-    .select("product quantity _id")
-    .populate("product", "name")
+  .select("product quantity _id created")
+  .populate("product", "name")
     .exec()
     .then(docs => {
       res.status(200).json({
@@ -16,6 +16,7 @@ exports.orders_get_all = (req, res, next) => {
             _id: doc._id,
             product: doc.product,
             quantity: doc.quantity,
+            created: doc.created,
             request: {
               type: "GET",
               url: "http://localhost:3000/orders/" + doc._id
@@ -42,7 +43,8 @@ exports.orders_create_order = (req, res, next) => {
       const order = new Order({
         _id: mongoose.Types.ObjectId(),
         quantity: req.body.quantity,
-        product: req.body.productId
+        product: req.body.productId,
+        created: req.body.created
       });
       return order.save();
     })
@@ -53,7 +55,8 @@ exports.orders_create_order = (req, res, next) => {
         createdOrder: {
           _id: result._id,
           product: result.product,
-          quantity: result.quantity
+          quantity: result.quantity,
+          created: result.created
         },
         request: {
           type: "GET",
