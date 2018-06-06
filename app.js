@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/myappapi', function () {
  console.log('mongodb is up and conetid');
     
 });
-
+mongoose.Promise=global.Promise;
 
 ///routes which shonld hanle requests
 app.use(morgan('dev'));
