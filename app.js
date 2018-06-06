@@ -10,6 +10,7 @@ const mongoose = require("mongoose")
 const productRoutes = require('./app/routes/products')
 
 const orderRoutes = require('./app/routes/orders')
+const userRoutes = require('./app/routes/user')
 
 mongoose.connect('mongodb://localhost:27017/myappapi', function () {
  console.log('mongodb is up and conetid');
@@ -23,8 +24,11 @@ app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+
+///routes which shonld hanle requests
 app.use('/products', productRoutes )
 app.use('/orders', orderRoutes )
+app.use('/user', userRoutes )
 
 
 
