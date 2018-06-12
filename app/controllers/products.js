@@ -3,7 +3,7 @@ const Product = require("../models/product");
 
 exports.products_get_all = (req, res, next) => {
   Product.find()
-    .select("name price _id productImage")
+    .select("name price _id productImage barcode quantity")
     .exec()
     .then(docs => {
       const response = {
@@ -14,6 +14,8 @@ exports.products_get_all = (req, res, next) => {
             price: doc.price,
             productImage: doc.productImage,
             _id: doc._id,
+            quantity: doc.quantity,
+            barcode: doc.barcode,
             request: {
               type: "GET",
               url: "http://localhost:3000/products/" + doc._id
@@ -42,7 +44,9 @@ exports.products_create_product = (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     price: req.body.price,
-    productImage: req.file.path
+    productImage: req.file.path,
+    barcode: req.body.barcode,
+    quantity: req.body.quantity
   });
   product
     .save()
@@ -54,6 +58,8 @@ exports.products_create_product = (req, res, next) => {
           name: result.name,
           price: result.price,
           _id: result._id,
+          barcode: result.barcode,
+          quantity: result.quantity,
           request: {
             type: "GET",
             url: "http://localhost:3000/products/" + result._id
